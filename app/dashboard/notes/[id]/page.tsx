@@ -6,7 +6,6 @@ import {
   ArrowLeft, 
   Save, 
   Trash2, 
-  Sparkles, 
   Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,10 +22,8 @@ export default function SingleNotePage() {
   const router = useRouter();
   
   const [note, setNote] = useState({ title: "", content: "" });
-  const [summary, setSummary] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [summarizing, setSummarizing] = useState(false);
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -70,24 +67,6 @@ export default function SingleNotePage() {
     }
   };
 
-  const generateSummary = async () => {
-    setSummarizing(true);
-    try {
-      // මෙතනට ඔයාගේ AI API එක (Gemini/OpenAI) සම්බන්ධ කරන්න පුළුවන්
-      const res = await fetch(`/api/ai/summarize`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: note.content }),
-      });
-      const data = await res.json();
-      setSummary(data.summary);
-    } catch {
-      setSummary("AI Summary generation failed. Please try again.");
-    } finally {
-      setSummarizing(false);
-    }
-  };
-
   if (loading) return <div className="flex h-screen items-center justify-center bg-slate-950 text-white italic">Loading note content...</div>;
 
   return (
@@ -98,9 +77,6 @@ export default function SingleNotePage() {
           <ArrowLeft className="mr-2" size={18} /> Back to Library
         </Button>
         <div className="flex flex-wrap gap-3">
-          <Button onClick={generateSummary} disabled={summarizing} className="bg-purple-600 hover:bg-purple-700 text-white rounded-xl px-5 font-bold flex gap-2">
-            {summarizing ? <Loader2 className="animate-spin" size={18} /> : <Sparkles size={18} />} AI Summarize
-          </Button>
           <Button onClick={handleUpdate} disabled={saving} className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-5 font-bold flex gap-2">
             {saving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />} Save Changes
           </Button>
@@ -127,25 +103,23 @@ export default function SingleNotePage() {
           />
         </div>
 
-        {/* Sidebar Info & AI Result */}
+        {/* Sidebar Info */}
         <div className="space-y-6">
           <Card className="bg-slate-900 border-slate-800 rounded-2xl overflow-hidden">
             <CardHeader className="bg-slate-800/30 p-4 border-b border-slate-800">
-              <h3 className="text-sm font-bold flex items-center gap-2 text-purple-400"><Sparkles size={16}/> AI Insight Summary</h3>
+              <h3 className="text-sm font-bold text-slate-300">Note Information</h3>
             </CardHeader>
             <CardContent className="p-5">
-              {summary ? (
-                <p className="text-slate-400 text-sm italic leading-loose">{summary}</p>
-              ) : (
-                <p className="text-slate-600 text-xs italic">Click the &apos;AI Summarize&apos; button to generate a quick overview of your note.</p>
-              )}
+              <p className="text-slate-400 text-sm leading-loose">
+                Keep your notes organized and safe. All changes are saved automatically.
+              </p>
             </CardContent>
           </Card>
 
           <div className="p-4 bg-slate-950 border border-slate-900 rounded-2xl space-y-4">
              <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
                 <span>Created On</span>
-                <span className="text-slate-300">April 6, 2026</span>
+                <span className="text-slate-300">April 7, 2026</span>
              </div>
              <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-slate-500">
                 <span>Words</span>
