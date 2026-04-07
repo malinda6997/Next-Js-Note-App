@@ -26,7 +26,7 @@ export default function Sidebar() {
       <div className="mb-10 px-2">
         <h2 className="text-xl font-black tracking-tighter text-white">CloudNote.ai</h2>
       </div>
-      <nav className="space-y-2 flex-grow">
+      <nav className="space-y-2 grow">
         <SidebarItem icon={<LayoutDashboard size={20} />} label="Overview" href="/dashboard" />
         <SidebarItem icon={<BookOpen size={20} />} label="My Notes" href="/dashboard/notes" />
         <SidebarItem icon={<Settings size={20} />} label="Settings" href="/dashboard/settings" />
