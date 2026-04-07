@@ -100,13 +100,13 @@ export default function MyNotesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredNotes.map((note) => (
             <Link key={note._id} href={`/dashboard/notes/${note._id}`}>
-              <Card className="bg-slate-900/40 border-slate-800 hover:border-blue-600/40 hover:bg-slate-900/60 transition-all group overflow-hidden flex flex-col h-[250px] relative cursor-pointer">
+              <Card className="bg-slate-900/40 border-slate-800 hover:border-blue-600/40 hover:bg-slate-900/60 transition-all group overflow-hidden flex flex-col h-62.5 relative cursor-pointer">
                 <CardHeader className="p-5 pb-2 flex flex-row items-start justify-between space-y-0">
                   <div className="flex items-center gap-3">
                     <div className="bg-blue-600/10 p-2 rounded-lg text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-colors">
                       <FileText size={20} />
                     </div>
-                    <CardTitle className="text-lg font-bold text-slate-200 truncate max-w-[180px] group-hover:text-white">
+                    <CardTitle className="text-lg font-bold text-slate-200 truncate max-w-45 group-hover:text-white">
                       {note.title}
                     </CardTitle>
                   </div>
@@ -136,7 +136,7 @@ export default function MyNotesPage() {
                   </DropdownMenu>
                 </CardHeader>
 
-                <CardContent className="p-5 pt-2 flex-grow overflow-hidden">
+                <CardContent className="p-5 pt-2 grow overflow-hidden">
                   <p className="text-slate-500 text-sm leading-relaxed line-clamp-4 italic group-hover:text-slate-400 transition-colors">
                      {note.content}
                   </p>

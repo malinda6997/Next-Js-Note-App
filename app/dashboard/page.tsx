@@ -40,8 +40,8 @@ const StatCard = ({ title, value }: { title: string, value: string }) => (
   </Card>
 );
 
-const NoteCard = ({ title, date }: { title: string, date: string }) => (
-  <div className="p-5 bg-slate-900/40 border border-slate-800 rounded-2xl hover:border-blue-600/30 transition-all group cursor-pointer flex flex-col gap-2">
+const NoteCard = ({ id, title, date, onNavigate }: { id: string, title: string, date: string, onNavigate: (id: string) => void }) => (
+  <div onClick={() => onNavigate(id)} className="p-5 bg-slate-900/40 border border-slate-800 rounded-2xl hover:border-blue-600/30 transition-all group cursor-pointer flex flex-col gap-2">
     <div className="bg-blue-600/10 w-8 h-8 rounded-lg flex items-center justify-center text-blue-400">
         <FileText size={16} />
     </div>
@@ -131,7 +131,7 @@ export default function DashboardPage() {
               <Plus size={20} /> New Note
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-slate-900 border-slate-800 text-white sm:max-w-[525px] rounded-2xl">
+          <DialogContent className="bg-slate-900 border-slate-800 text-white sm:max-w-131.25 rounded-2xl">
             <DialogHeader>
               <DialogTitle className="text-xl font-bold tracking-tight">Create New Note</DialogTitle>
             </DialogHeader>
@@ -150,7 +150,7 @@ export default function DashboardPage() {
                 <label className="text-xs font-bold uppercase text-slate-500 tracking-widest">Content</label>
                 <Textarea 
                   placeholder="Start typing your thoughts here..." 
-                  className="bg-slate-950 border-slate-800 focus:border-blue-600 rounded-xl min-h-[150px] resize-none"
+                  className="bg-slate-950 border-slate-800 focus:border-blue-600 rounded-xl min-h-37.5 resize-none"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   required
@@ -190,9 +190,11 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {notes.slice(0, 3).map((note) => (
               <NoteCard 
-                key={note._id} 
+                key={note._id}
+                id={note._id}
                 title={note.title} 
-                date={new Date(note.createdAt).toLocaleDateString()} 
+                date={new Date(note.createdAt).toLocaleDateString()}
+                onNavigate={(id) => router.push(`/dashboard/notes/${id}`)}
               />
             ))}
           </div>

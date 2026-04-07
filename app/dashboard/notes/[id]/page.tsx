@@ -7,8 +7,7 @@ import {
   Save, 
   Trash2, 
   Sparkles, 
-  Loader2,
-  Calendar
+  Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,9 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { 
   Card, 
   CardHeader, 
-  CardTitle, 
-  CardContent, 
-  CardFooter 
+  CardContent
 } from "@/components/ui/card";
 
 export default function SingleNotePage() {
@@ -32,20 +29,20 @@ export default function SingleNotePage() {
   const [summarizing, setSummarizing] = useState(false);
 
   useEffect(() => {
+    const fetchNote = async () => {
+      try {
+        const res = await fetch(`/api/notes/${id}`);
+        const data = await res.json();
+        if (res.ok) setNote(data);
+      } catch {
+        console.error("Fetch error");
+      } finally {
+        setLoading(false);
+      }
+    };
+    
     fetchNote();
   }, [id]);
-
-  const fetchNote = async () => {
-    try {
-      const res = await fetch(`/api/notes/${id}`);
-      const data = await res.json();
-      if (res.ok) setNote(data);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleUpdate = async () => {
     setSaving(true);
@@ -56,8 +53,8 @@ export default function SingleNotePage() {
         body: JSON.stringify(note),
       });
       if (res.ok) alert("Note updated successfully!");
-    } catch (error) {
-      console.error("Update error:", error);
+    } catch {
+      console.error("Update error");
     } finally {
       setSaving(false);
     }
@@ -68,8 +65,8 @@ export default function SingleNotePage() {
     try {
       const res = await fetch(`/api/notes/${id}`, { method: "DELETE" });
       if (res.ok) router.push("/dashboard/notes");
-    } catch (error) {
-      console.error("Delete error:", error);
+    } catch {
+      console.error("Delete error");
     }
   };
 
@@ -84,7 +81,7 @@ export default function SingleNotePage() {
       });
       const data = await res.json();
       setSummary(data.summary);
-    } catch (error) {
+    } catch {
       setSummary("AI Summary generation failed. Please try again.");
     } finally {
       setSummarizing(false);
@@ -125,7 +122,7 @@ export default function SingleNotePage() {
           <Textarea 
             value={note.content} 
             onChange={(e) => setNote({...note, content: e.target.value})}
-            className="min-h-[500px] bg-slate-900/30 border-slate-800 rounded-2xl p-6 text-slate-300 leading-relaxed text-lg focus:border-blue-600 transition-all resize-none"
+            className="min-h-125 bg-slate-900/30 border-slate-800 rounded-2xl p-6 text-slate-300 leading-relaxed text-lg focus:border-blue-600 transition-all resize-none"
             placeholder="Start expanding your thoughts..."
           />
         </div>
@@ -140,7 +137,7 @@ export default function SingleNotePage() {
               {summary ? (
                 <p className="text-slate-400 text-sm italic leading-loose">{summary}</p>
               ) : (
-                <p className="text-slate-600 text-xs italic">Click the 'AI Summarize' button to generate a quick overview of your note.</p>
+                <p className="text-slate-600 text-xs italic">Click the &apos;AI Summarize&apos; button to generate a quick overview of your note.</p>
               )}
             </CardContent>
           </Card>
