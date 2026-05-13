@@ -16,14 +16,25 @@ pipeline {
             }
         }
 
+        // stage('Build Docker Image') {
+        //     steps {
+        //         script {
+        //             sh "docker build --build-arg MONGODB_URI=${MONGODB_URI} -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
+        //             sh "docker tag ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest"
+        //         }
+        //     }
+        // }
         stage('Build Docker Image') {
-            steps {
-                script {
-                    sh "docker build --build-arg MONGODB_URI=${MONGODB_URI} -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ."
-                    sh "docker tag ${DOCKER_HUB_USER}/${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest"
-                }
-            }
+    steps {
+        script {
+            sh "docker build \
+                --build-arg MONGODB_URI=${MONGODB_URI} \
+                --build-arg NEXTAUTH_URL=http://52.3.14.166:3000 \
+                --build-arg NEXTAUTH_SECRET=hDE/hO9gIiVJG4FKumL5hZwpCJ7BXWqAKuvc5M60lrM= \
+                -t malinda699/note-app:${env.BUILD_NUMBER} ."
         }
+    }
+}
 
         stage('Push to Docker Hub') {
             steps {
