@@ -9,6 +9,14 @@ yarn-error.log*
 out
 build
 
+# Terraform files
+terraform/
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+.terraform.lock.hcl
+
 # Environment variables
 .env
 .env.local
