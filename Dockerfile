@@ -15,7 +15,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build
 
-RUN npm prune --production
+RUN npm prune --production --legacy-peer-deps
 
 EXPOSE 3000
 
