@@ -269,7 +269,7 @@ npm run lint -- --fix
 ![Login Page](./readmeimages/loging%20page%20using%20server.png)
 
 #### Registration Page
-![Registration Page](./readmeimages/register%20page%20using%20server.png)
+![Registration Page](./readmeimages/register%20page%20%20using%20server.png)
 
 #### Dashboard
 ![Dashboard](./readmeimages/dashbord%20using%20server.png)
@@ -721,6 +721,6 @@ For support, email support@cloudnote-ai.com or open an issue on GitHub.
 
 ---
 
-**Built with ❤️ by the CloudNote AI Team**
+**Built with ❤️ by Malinda Prabath**
 
 *Last Updated: May 2026*
